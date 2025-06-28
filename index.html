@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HORIZON INDIA LOGIN</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #000000, #0f0f0f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+    .login-container {
+      width: 360px;
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      border: 2px solid rgba(0, 255, 255, 0.2);
+      animation: glowBorder 6s linear infinite;
+      text-align: center;
+    }
+    @keyframes glowBorder {
+      0%,100% { box-shadow: 0 0 20px #ff00ff; }
+      25% { box-shadow: 0 0 20px #00f0ff; }
+      50% { box-shadow: 0 0 20px #00ff94; }
+      75% { box-shadow: 0 0 20px #ff0000; }
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: #0ff3;
+      border: 2px solid #00f0ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00f0ff;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #00f0ff;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 12px;
+      font-size: 16px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #ffffff44;
+      color: #fff;
+      outline: none;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: 14px;
+      left: 12px;
+      color: #aaa;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus,
+    .input-group input:not(:placeholder-shown) {
+      border-bottom: 2px solid #00f0ff;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 5px;
+      font-size: 12px;
+      color: #00f0ff;
+      background: #0f0f0f;
+      padding: 0 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00f0ff, #00ff94);
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .links {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .links a {
+      color: #00f0ff;
+      text-decoration: none;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      color: #aaa;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+  <div class="logo">
+  <img src="logo.png" alt="Horizon India Logo" style="width: 70px; height: 70px; border-radius: 50%;">
+</div> <!-- LOGO PLACEHOLDER -->
+
+    <h2>HORIZON INDIA</h2>
+
+    <div class="input-group">
+      <input type="email" id="email" required placeholder=" " />
+      <label for="email">Email</label>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="password" required placeholder=" " />
+      <label for="password">Password</label>
+    </div>
+
+    <button onclick="login()">Login</button>
+    <button onclick="register()">Create Account</button>
+
+    <div class="links">
+      <a onclick="forgotPassword()">Forgot Password?</a>
+    </div>
+    
+    <button onclick="window.open('https://t.me/Horizonotp_bot', '_blank')"
+        style="margin-top: 15px; background: linear-gradient(90deg, #0088cc, #00f0ff); color: white; display: flex; align-items: center; justify-content: center; gap: 10px;">
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 20px; height: 20px;">
+  Message us on Telegram
+</button>
+    
+    <div id="toast" style="
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,255,255,0.1);
+  border: 1px solid #00f0ff;
+  color: #00f0ff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  backdrop-filter: blur(5px);
+  display: none;
+  box-shadow: 0 0 10px #00f0ff88;
+  z-index: 9999;
+"></div>
+    
+  </div>
+
+  <footer>© 2025 Horizon India – 100% Secure</footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyD0bpnCK1dWjBhLe5jYUjs5iT7CSDi4Ugs",
+  authDomain: "horizon-india-438ca.firebaseapp.com",
+  projectId: "horizon-india-438ca",
+  storageBucket: "horizon-india-438ca.firebasestorage.app",
+  messagingSenderId: "375725826736",
+  appId: "1:375725826736:web:cd6815e08c16a123a2d175"
+};
+
+    firebase.initializeApp(firebaseConfig);
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          showToast("✅ Login Successful!");
+          window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          showToast("❌ " + error.message);
+        });
+    }
+
+    function register() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          showToast("✅ Account Created!");
+          window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          showToast("❌ " + error.message);
+        });
+    }
+
+    function forgotPassword() {
+      const email = document.getElementById("email").value;
+      if (!email) return showToast("⚠️ Enter email to reset password.");
+      firebase.auth().sendPasswordResetEmail(email)
+        .then(() => showToast("📩 Reset email sent."))
+        .catch((error) => showToast("❌ " + error.message));
+    }
+  </script>
+  
+
+  <script>
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.style.display = "block";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3000);
+  }
+</script>
+  
+</body>
+</html>
